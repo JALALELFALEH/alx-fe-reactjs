@@ -4,15 +4,28 @@ import useRecipeStore from "./recipeStore";
 
 const RecipeList = () => {
     const recipes = useRecipeStore(state => state.recipes);
-    const filtredRecipes = useRecipeStore(state => state.filteredRecipes);
+    const filteredRecipes = useRecipeStore(state => state.filteredRecipes);
     const searchTerm = useRecipeStore(state => state.searchTerm);
-    const filterRecipes = useRecipeStore(state => state.filterRecipes)
+    const filterRecipes = useRecipeStore(state => state.filterRecipes);
+    const favorites = useRecipeStore(state => state.favorites);
+    const addFavorite = useRecipeStore(state => state.addFavorite);
+    const removeFavorite = useRecipeStore(state => state.removeFavorite);
     
     useEffect(() => {
         filterRecipes();
     }, [recipes, filterRecipes]);
 
-    const displayedRecipes = searchTerm ? filtredRecipes : recipes;
+    const displayedRecipes = searchTerm ? filteredRecipes : recipes;
+    
+    const isFavorite = (recipeId) => favorites.includes(recipeId);
+    
+    const toggleFavorite = (recipeId) => {
+        if (isFavorite(recipeId)) {
+            removeFavorite(recipeId);
+        } else {
+            addFavorite(recipeId);
+        }
+    };
     
     return (
         <div>
@@ -35,6 +48,16 @@ const RecipeList = () => {
                             <Link to={`/recipe/${recipe.id}`}>{recipe.title}</Link>
                         </h3>
                         <p>{recipe.description}</p>
+                        <button 
+                            onClick={() => toggleFavorite(recipe.id)}
+                            style={{
+                                backgroundColor: isFavorite(recipe.id) ? '#ff6b6b' : '#646cff',
+                                color: 'white',
+                                marginTop: '10px'
+                            }}
+                        >
+                            {isFavorite(recipe.id) ? '❤️ Favorited' : '🤍 Add to Favorites'}
+                        </button>
                     </div>
                 ))
             )}
