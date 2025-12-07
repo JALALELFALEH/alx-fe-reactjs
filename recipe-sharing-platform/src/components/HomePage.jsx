@@ -67,6 +67,14 @@ function HomePage() {
             </div>
         </header>
 
+        <div className="mt-8 flex justify-center">
+        <a 
+            href="/add-recipe"
+            className="bg-green-500 hover:bg-green-600 text-white font-medium py-3 px-8 rounded-lg transition duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl"
+        >
+            + Add New Recipe
+        </a>
+        </div>
         {/* Main Content */}
         <main className="max-w-6xl mx-auto px-4 py-8">
             {/* Page Header */}
