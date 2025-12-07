@@ -23,9 +23,11 @@ function AddRecipeForm() {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitSuccess, setSubmitSuccess] = useState(false);
     
-    // Handle input changes
+    // Handle input changes - CORRECTED
     const handleChange = (e) => {
-        const { name, value } = e.target;
+        const name = e.target.name;
+        const value = e.target.value;
+        
         setFormData(prev => ({
         ...prev,
         [name]: value
@@ -114,10 +116,13 @@ function AddRecipeForm() {
         if (Object.keys(validationErrors).length > 0) {
         // Scroll to first error
         const firstErrorField = Object.keys(validationErrors)[0];
-        document.querySelector(`[name="${firstErrorField}"]`)?.scrollIntoView({
+        const errorElement = document.querySelector(`[name="${firstErrorField}"]`);
+        if (errorElement) {
+            errorElement.scrollIntoView({
             behavior: 'smooth',
             block: 'center'
-        });
+            });
+        }
         return;
         }
         
@@ -128,12 +133,20 @@ function AddRecipeForm() {
         // In a real app, you would send this to your backend
         const newRecipe = {
             id: Date.now(), // Generate unique ID
-            ...formData,
+            title: formData.title,
+            summary: formData.summary,
             ingredients: formData.ingredients.split('\n').filter(line => line.trim() !== ''),
             instructions: formData.instructions.split('\n').filter(line => line.trim() !== ''),
+            prepTime: formData.prepTime,
+            cookTime: formData.cookTime,
+            totalTime: `${parseInt(formData.prepTime) + parseInt(formData.cookTime)} minutes`,
+            servings: formData.servings,
+            difficulty: formData.difficulty,
+            image: formData.image || 'https://via.placeholder.com/150',
             rating: 4.0, // Default rating
             calories: 0, // Would calculate in real app
-            tips: ['Add your own tips here!']
+            tips: ['Add your own tips here!'],
+            description: formData.summary
         };
         
         console.log('New recipe data:', newRecipe);
@@ -176,6 +189,22 @@ function AddRecipeForm() {
         if (window.confirm('Are you sure you want to cancel? All unsaved changes will be lost.')) {
         navigate('/');
         }
+    };
+    
+    // Handle clear form
+    const handleClearForm = () => {
+        setFormData({
+        title: '',
+        summary: '',
+        ingredients: '',
+        instructions: '',
+        prepTime: '',
+        cookTime: '',
+        servings: '',
+        difficulty: 'Easy',
+        image: ''
+        });
+        setErrors({});
     };
     
     return (
@@ -511,21 +540,7 @@ function AddRecipeForm() {
                     <div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
                     <button
                         type="button"
-                        onClick={() => {
-                        // Reset form
-                        setFormData({
-                            title: '',
-                            summary: '',
-                            ingredients: '',
-                            instructions: '',
-                            prepTime: '',
-                            cookTime: '',
-                            servings: '',
-                            difficulty: 'Easy',
-                            image: ''
-                        });
-                        setErrors({});
-                        }}
+                        onClick={handleClearForm}
                         className="px-8 py-3 border border-blue-300 text-blue-600 font-medium rounded-lg hover:bg-blue-50 transition duration-200 w-full sm:w-auto"
                         disabled={isSubmitting}
                     >
