@@ -1,69 +1,48 @@
 // src/components/RecipeCard.jsx
-import React from 'react';
-import { ClockIcon, UserIcon, FireIcon } from '@heroicons/react/24/outline';
-
-const RecipeCard = ({ recipe }) => {
+function RecipeCard({ recipe }) {
     return (
-        <article className="card group hover:-translate-y-1 transition-all duration-300">
+        <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100">
         {/* Image Container */}
-        <div className="relative h-56 overflow-hidden">
-            <img
-            src={recipe.image}
+        <div className="relative h-48 overflow-hidden bg-gray-100">
+            <img 
+            src={recipe.image} 
             alt={recipe.title}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+            onError={(e) => {
+                e.target.src = `https://via.placeholder.com/300x200/cccccc/666666?text=${encodeURIComponent(recipe.title)}`;
+            }}
             />
-            <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full">
-            <span className="font-bold text-secondary">{recipe.difficulty}</span>
-            </div>
-            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
-            <div className="flex items-center text-white">
-                <FireIcon className="h-5 w-5 text-amber-300 mr-1" />
-                <span className="font-semibold">{recipe.rating.toFixed(1)}</span>
-                <span className="text-gray-300 ml-1">/ 5.0</span>
-            </div>
+            <div className="absolute top-3 right-3 bg-blue-500 text-white text-xs font-bold px-3 py-1 rounded-full">
+            #{recipe.id}
             </div>
         </div>
-
+        
         {/* Content */}
-        <div className="p-6">
-            <div className="flex flex-wrap gap-2 mb-3">
-            {recipe.tags.map((tag) => (
-                <span
-                key={tag}
-                className="inline-block px-3 py-1 text-xs font-semibold bg-primary bg-opacity-10 text-primary rounded-full"
-                >
-                {tag}
-                </span>
-            ))}
-            </div>
-
-            <h3 className="text-xl font-bold text-gray-900 mb-2 line-clamp-1">{recipe.title}</h3>
-            <p className="text-gray-600 mb-4 line-clamp-2">{recipe.description}</p>
-
-            {/* Meta Data */}
-            <div className="flex items-center justify-between text-sm text-gray-500 border-t border-gray-100 pt-4">
-            <div className="flex items-center space-x-4">
-                <div className="flex items-center">
-                <ClockIcon className="h-4 w-4 mr-1" />
-                <span>{recipe.prepTime + recipe.cookTime} min</span>
-                </div>
-                <div className="flex items-center">
-                <UserIcon className="h-4 w-4 mr-1" />
-                <span>{recipe.servings} servings</span>
-                </div>
-            </div>
-            <div className="text-right">
-                <p className="font-medium text-gray-900">{recipe.author}</p>
-            </div>
-            </div>
-
-            {/* Action Button */}
-            <button className="btn-primary w-full mt-6">
-            View Recipe
+        <div className="p-5">
+            <h3 className="text-xl font-bold text-gray-800 mb-3 hover:text-blue-600 transition-colors cursor-pointer">
+            {recipe.title}
+            </h3>
+            
+            <p className="text-gray-600 mb-4 h-12 overflow-hidden">
+            {recipe.summary}
+            </p>
+            
+            <div className="flex justify-between items-center">
+            <button className="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-lg transition duration-200 ease-in-out transform hover:scale-105 active:scale-95">
+                View Details →
             </button>
+            
+            <div className="flex items-center space-x-1">
+                {[...Array(5)].map((_, i) => (
+                <span key={i} className={`text-sm ${i < 4 ? 'text-yellow-500' : 'text-gray-300'}`}>
+                    ★
+                </span>
+                ))}
+            </div>
+            </div>
         </div>
-        </article>
+        </div>
     );
-};
+}
 
 export default RecipeCard;
