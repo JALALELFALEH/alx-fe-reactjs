@@ -6,7 +6,7 @@ function FormoikForm() {
         <div>
             <h2>Formik Form</h2>
             <formik
-            initialValue={{username: '', email: '', password: ''}}
+            initialValues={{username: '', email: '', password: ''}}
             validationSchema={Yup.object({
                 username: Yup.string().required('Required'),
                 email: Yup.string().email('Invalid email').reduired('Required'),
