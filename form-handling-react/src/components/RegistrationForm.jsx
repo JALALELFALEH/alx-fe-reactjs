@@ -9,13 +9,13 @@ const RegistrationForm = () => {
     const HandleSubmit = (e) => {
         e.preventDefault();
         const newErrors = {};
-        if(!username) {
+        if (!username) {
             newErrors.username = 'Enter a Username' ;            
         };
-        if(!email) {
+        if (!email) {
             newErrors.email = 'Enter a valid email';
         };
-        if(!password) {
+        if (!password) {
             newErrors.password = 'enter a password';
         };
 
