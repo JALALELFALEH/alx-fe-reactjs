@@ -4,11 +4,13 @@ import './ProtectedRoute.css';
 const ProtectedRoute = ({ children, isAuthenticated }) => {
     const location = useLocation();
 
+    // If user is not authenticated, redirect to login page
     if (!isAuthenticated) {
-        // Redirect to login page, but save the location they tried to visit
+        // Save the current location they tried to access
         return <Navigate to="/login" state={{ from: location }} replace />;
     }
 
+    // If authenticated, render the children (protected component)
     return children;
 };
 
