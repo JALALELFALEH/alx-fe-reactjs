@@ -27,22 +27,6 @@ const Blog = () => {
         date: '2024-01-25',
         readTime: '6 min',
         },
-        {
-        id: 4,
-        title: 'Dynamic Routing Patterns',
-        excerpt: 'Handle variable URLs and dynamic content loading efficiently.',
-        author: 'Diana Prince',
-        date: '2024-01-30',
-        readTime: '7 min',
-        },
-        {
-        id: 5,
-        title: 'Route Transitions & Animations',
-        excerpt: 'Create smooth transitions between routes for better UX.',
-        author: 'Ethan Hunt',
-        date: '2024-02-05',
-        readTime: '4 min',
-        },
     ];
 
     return (
@@ -65,7 +49,7 @@ const Blog = () => {
                 <p className="post-excerpt">{post.excerpt}</p>
                 
                 <div className="post-actions">
-                <Link to={`/blog/${post.id}`} className="read-more-btn">
+                <Link to={`/blog/${post.id}`} className="read-more-btn"> {/* Fixed: using post.id */}
                     Read Full Post →
                 </Link>
                 <div className="post-id-badge">ID: {post.id}</div>
@@ -80,16 +64,16 @@ const Blog = () => {
             <div className="info-card">
                 <h4>How it works:</h4>
                 <p>Each blog post has a unique ID in the URL</p>
-                <code>/blog/:postId</code>
+                <code>/blog/:id</code> {/* Fixed: using :id */}
             </div>
             <div className="info-card">
                 <h4>Try it:</h4>
                 <p>Click any post to see the dynamic URL</p>
-                <p>Try manually entering <code>/blog/3</code> in the URL bar</p>
+                <p>Try manually entering <code>/blog/1</code> in the URL bar</p>
             </div>
             <div className="info-card">
                 <h4>Behind the scenes:</h4>
-                <p>The <code>useParams</code> hook extracts the postId</p>
+                <p>The <code>useParams</code> hook extracts the id</p>
                 <p>Component fetches/renders data based on the parameter</p>
             </div>
             </div>

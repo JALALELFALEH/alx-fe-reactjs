@@ -2,10 +2,10 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import './BlogPost.css';
 
 const BlogPost = () => {
-    const { postId } = useParams();
+    const { id } = useParams(); // Changed from postId to id
     const navigate = useNavigate();
 
-    // Mock blog post data - in real app, you'd fetch this based on postId
+    // Mock blog post data - in real app, you'd fetch this based on id
     const blogPosts = {
         1: {
         title: 'Mastering React Router',
@@ -71,13 +71,13 @@ const BlogPost = () => {
         },
     };
 
-    const post = blogPosts[postId];
+    const post = blogPosts[id];
 
     if (!post) {
         return (
         <div className="blog-post not-found">
             <h2>Post Not Found</h2>
-            <p>No blog post found with ID: {postId}</p>
+            <p>No blog post found with ID: {id}</p>
             <Link to="/blog" className="back-btn">Back to Blog</Link>
         </div>
         );
@@ -93,7 +93,7 @@ const BlogPost = () => {
             <div className="post-meta">
             <span className="post-author">By {post.author}</span>
             <span className="post-date">{post.date}</span>
-            <span className="post-id">Post ID: {postId}</span>
+            <span className="post-id">Post ID: {id}</span>
             </div>
         </div>
 
@@ -115,13 +115,13 @@ const BlogPost = () => {
             
             <div className="navigation">
             <div className="nav-info">
-                <p>Current URL: <code>/blog/{postId}</code></p>
-                <p>Dynamic parameter: <code>postId = {postId}</code></p>
+                <p>Current URL: <code>/blog/{id}</code></p>
+                <p>Dynamic parameter: <code>id = {id}</code></p>
             </div>
             
             <div className="nav-buttons">
-                {postId > 1 && (
-                <Link to={`/blog/${parseInt(postId) - 1}`} className="nav-btn prev">
+                {id > 1 && (
+                <Link to={`/blog/${parseInt(id) - 1}`} className="nav-btn prev">
                     ← Previous Post
                 </Link>
                 )}
@@ -130,8 +130,8 @@ const BlogPost = () => {
                 All Posts
                 </Link>
                 
-                {postId < 3 && (
-                <Link to={`/blog/${parseInt(postId) + 1}`} className="nav-btn next">
+                {id < 3 && (
+                <Link to={`/blog/${parseInt(id) + 1}`} className="nav-btn next">
                     Next Post →
                 </Link>
                 )}
@@ -144,7 +144,7 @@ const BlogPost = () => {
             <div className="demo-content">
             <div className="demo-item">
                 <h4>Current Route Parameters:</h4>
-                <pre>{JSON.stringify({ postId }, null, 2)}</pre>
+                <pre>{JSON.stringify({ id }, null, 2)}</pre>
             </div>
             <div className="demo-item">
                 <h4>Try These URLs:</h4>
@@ -156,7 +156,7 @@ const BlogPost = () => {
             </div>
             <div className="demo-item">
                 <h4>How it Works:</h4>
-                <p>The <code>useParams()</code> hook extracts <code>postId</code> from the URL.</p>
+                <p>The <code>useParams()</code> hook extracts <code>id</code> from the URL.</p>
                 <p>The component uses this ID to display the appropriate content.</p>
             </div>
             </div>

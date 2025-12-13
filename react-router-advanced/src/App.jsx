@@ -65,7 +65,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/blog" element={<Blog />} />
-            <Route path="/blog/:postId" element={<BlogPost />} />
+            <Route path="/blog/:id" element={<BlogPost />} /> {/* Fixed: using :id instead of :postId */}
             <Route path="/login" element={
               <Login onLogin={handleLogin} isAuthenticated={isAuthenticated} />
             } />
