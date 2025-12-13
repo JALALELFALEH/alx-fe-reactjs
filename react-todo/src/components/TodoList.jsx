@@ -1,27 +1,30 @@
 import { useState } from 'react';
-import TodoItem from './TodoItem';
-import AddTodoForm from './AddTodoForm';
 import './TodoList.css';
 
 const TodoList = () => {
-  // Initial demo todos
     const [todos, setTodos] = useState([
         { id: 1, text: 'Learn React', completed: true },
         { id: 2, text: 'Build a Todo App', completed: false },
         { id: 3, text: 'Write Tests', completed: false },
     ]);
 
-    // Add a new todo
-    const addTodo = (text) => {
+    const [input, setInput] = useState('');
+
+    const addTodo = (e) => {
+        e.preventDefault();
+        const trimmedInput = input.trim();
+        
+        if (trimmedInput) {
         const newTodo = {
-        id: Date.now(), // Simple ID generation
-        text,
-        completed: false,
+            id: Date.now(),
+            text: trimmedInput,
+            completed: false,
         };
         setTodos([...todos, newTodo]);
+        setInput('');
+        }
     };
 
-    // Toggle todo completion
     const toggleTodo = (id) => {
         setTodos(
         todos.map((todo) =>
@@ -30,21 +33,35 @@ const TodoList = () => {
         );
     };
 
-    // Delete a todo
     const deleteTodo = (id) => {
         setTodos(todos.filter((todo) => todo.id !== id));
     };
 
-    // Count remaining todos
     const remainingTodos = todos.filter((todo) => !todo.completed).length;
 
     return (
-        <div className="todo-container">
+        <div className="todo-container" data-testid="todo-container">
         <h1>Todo List</h1>
         
-        <AddTodoForm onAddTodo={addTodo} />
+        <form onSubmit={addTodo} className="add-todo-form" data-testid="add-todo-form">
+            <input
+            type="text"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            placeholder="What needs to be done?"
+            className="todo-input"
+            data-testid="todo-input"
+            />
+            <button 
+            type="submit" 
+            className="add-btn"
+            data-testid="add-button"
+            >
+            Add Todo
+            </button>
+        </form>
         
-        <div className="todo-stats">
+        <div className="todo-stats" data-testid="todo-stats">
             <p>
             {remainingTodos} {remainingTodos === 1 ? 'todo' : 'todos'} remaining
             out of {todos.length} total
@@ -52,16 +69,42 @@ const TodoList = () => {
         </div>
         
         {todos.length === 0 ? (
-            <p className="empty-message">No todos yet. Add one above!</p>
+            <p className="empty-message" data-testid="empty-message">
+            No todos yet. Add one above!
+            </p>
         ) : (
-            <ul className="todo-list">
+            <ul className="todo-list" data-testid="todo-list">
             {todos.map((todo) => (
-                <TodoItem
-                key={todo.id}
-                todo={todo}
-                onToggle={toggleTodo}
-                onDelete={deleteTodo}
-                />
+                <li 
+                key={todo.id} 
+                className={`todo-item ${todo.completed ? 'completed' : ''}`}
+                data-testid={`todo-item-${todo.id}`}
+                >
+                <div className="todo-content">
+                    <input
+                    type="checkbox"
+                    checked={todo.completed}
+                    onChange={() => toggleTodo(todo.id)}
+                    className="todo-checkbox"
+                    data-testid={`todo-checkbox-${todo.id}`}
+                    />
+                    <span
+                    className="todo-text"
+                    onClick={() => toggleTodo(todo.id)}
+                    data-testid={`todo-text-${todo.id}`}
+                    >
+                    {todo.text}
+                    </span>
+                </div>
+                <button
+                    onClick={() => deleteTodo(todo.id)}
+                    className="delete-btn"
+                    data-testid={`delete-button-${todo.id}`}
+                    aria-label={`Delete ${todo.text}`}
+                >
+                    ×
+                </button>
+                </li>
             ))}
             </ul>
         )}
