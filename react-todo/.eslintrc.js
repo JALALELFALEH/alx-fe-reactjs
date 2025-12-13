@@ -3,14 +3,12 @@ module.exports = {
         browser: true,
         es2021: true,
         node: true,
-        'jest/globals': true, // Jest globals
+        jest: true,
     },
     extends: [
         'eslint:recommended',
         'plugin:react/recommended',
         'plugin:react/jsx-runtime',
-        'plugin:jest/recommended', // Jest plugin
-        'plugin:testing-library/react', // Testing Library plugin
     ],
     parserOptions: {
         ecmaFeatures: {
@@ -19,7 +17,7 @@ module.exports = {
         ecmaVersion: 'latest',
         sourceType: 'module',
     },
-    plugins: ['react', 'jest', 'testing-library'],
+    plugins: ['react'],
     rules: {
         'react/prop-types': 'off',
         'no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
