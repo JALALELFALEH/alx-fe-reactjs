@@ -4,14 +4,29 @@ import './ProtectedRoute.css';
 const ProtectedRoute = ({ children, isAuthenticated }) => {
     const location = useLocation();
 
-    // If user is not authenticated, redirect to login page
+    // Check authentication status (passed as prop)
     if (!isAuthenticated) {
-        // Save the current location they tried to access
+        // Redirect to login page, preserving the location they tried to access
         return <Navigate to="/login" state={{ from: location }} replace />;
     }
 
-    // If authenticated, render the children (protected component)
-    return children;
+    // If authenticated, render the protected component
+    return (
+        <>
+        {children}
+        <div className="protected-route-info">
+            <h3>🔒 Protected Route Active</h3>
+            <p>This content is protected and requires authentication.</p>
+            <div className="auth-status">
+            <span className="status-indicator authenticated"></span>
+            <span>Authenticated: ✓</span>
+            </div>
+            <p className="route-info">
+            You're viewing this because you're logged in. Try logging out and refreshing this page.
+            </p>
+        </div>
+        </>
+    );
 };
 
 export default ProtectedRoute;
