@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1765719652008" clover="3.2.0">
+  <project timestamp="1765719652008" name="All files">
+    <metrics statements="21" coveredstatements="21" conditionals="6" coveredconditionals="6" methods="10" coveredmethods="10" elements="37" coveredelements="37" complexity="0" loc="21" ncloc="21" packages="1" files="1" classes="1"/>
+    <file name="TodoList.jsx" path="C:\Users\DELL\Desktop\ALX_Software_Engineering\Front_end\Week_15\alx-fe-reactjs\react-todo\src\components\TodoList.jsx">
+      <metrics statements="21" coveredstatements="21" conditionals="6" coveredconditionals="6" methods="10" coveredmethods="10"/>
+      <line num="3" count="1" type="stmt"/>
+      <line num="5" count="19" type="stmt"/>
+      <line num="11" count="19" type="stmt"/>
+      <line num="12" count="19" type="stmt"/>
+      <line num="15" count="19" type="stmt"/>
+      <line num="16" count="4" type="stmt"/>
+      <line num="17" count="4" type="stmt"/>
+      <line num="19" count="4" type="cond" truecount="2" falsecount="0"/>
+      <line num="20" count="2" type="stmt"/>
+      <line num="25" count="2" type="stmt"/>
+      <line num="26" count="2" type="stmt"/>
+      <line num="31" count="19" type="stmt"/>
+      <line num="32" count="2" type="stmt"/>
+      <line num="33" count="6" type="cond" truecount="2" falsecount="0"/>
+      <line num="38" count="19" type="stmt"/>
+      <line num="39" count="3" type="stmt"/>
+      <line num="42" count="19" type="stmt"/>
+      <line num="51" count="4" type="stmt"/>
+      <line num="66" count="58" type="stmt"/>
+      <line num="71" count="2" type="stmt"/>
+      <line num="81" count="1" type="stmt"/>
+    </file>
+  </project>
+</coverage>
