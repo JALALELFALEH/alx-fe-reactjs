@@ -1,57 +1,68 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
+import '@testing-library/jest-dom';
 import TodoList from '../components/TodoList';
 
-// This is the minimal test file that should pass the checker
-
-test('TodoList renders initial todos', () => {
+describe('TodoList Component', () => {
+// Test 1: Initial render with demo todos
+test('renders initial todos correctly', () => {
     render(<TodoList />);
-    
+
     // Check if initial todos are displayed
     expect(screen.getByText('Learn React')).toBeInTheDocument();
     expect(screen.getByText('Build a Todo App')).toBeInTheDocument();
     expect(screen.getByText('Write Tests')).toBeInTheDocument();
 });
 
-test('TodoList can add a new todo', () => {
+// Test 2: Add a new todo
+test('adds a new todo when form is submitted', () => {
     render(<TodoList />);
-    
-    const input = screen.getByPlaceholderText('What needs to be done?');
-    const button = screen.getByText('Add Todo');
-    
-    // Add a new todo
-    fireEvent.change(input, { target: { value: 'New Test Todo' } });
+
+    // Get input and button
+    const input = screen.getByPlaceholderText('Add a new todo...');
+    const button = screen.getByText('Add');
+
+    // Type new todo and submit
+    fireEvent.change(input, { target: { value: 'Test New Todo' } });
     fireEvent.click(button);
-    
-    expect(screen.getByText('New Test Todo')).toBeInTheDocument();
+
+    // Check if new todo is added
+    expect(screen.getByText('Test New Todo')).toBeInTheDocument();
 });
 
-test('TodoList can toggle todo completion', () => {
+// Test 3: Toggle todo completion
+test('toggles todo completion status when clicked', () => {
     render(<TodoList />);
-    
+
+    // Get the first todo item
     const firstTodo = screen.getByText('Learn React');
-    const checkbox = screen.getAllByRole('checkbox')[0];
-    
-    // Initially should be checked
-    expect(checkbox).toBeChecked();
-    
-    // Toggle it
+
+    // Initially should not have line-through
+    expect(firstTodo).not.toHaveStyle('text-decoration: line-through');
+
+    // Click to toggle (mark as completed)
     fireEvent.click(firstTodo);
-    
-    // Now should be unchecked
-    expect(checkbox).not.toBeChecked();
+
+    // Should now have line-through
+    expect(firstTodo).toHaveStyle('text-decoration: line-through');
+
+    // Click again to toggle back
+    fireEvent.click(firstTodo);
+    expect(firstTodo).not.toHaveStyle('text-decoration: line-through');
 });
 
-test('TodoList can delete a todo', () => {
+// Test 4: Delete a todo
+test('deletes a todo when delete button is clicked', () => {
     render(<TodoList />);
-    
-    // Check todo exists
+
+    // Check initial state - todo exists
     expect(screen.getByText('Learn React')).toBeInTheDocument();
-    
-    // Delete it
-    const deleteButton = screen.getByLabelText('Delete Learn React');
-    fireEvent.click(deleteButton);
-    
-    // Check it's gone
+
+    // Get all delete buttons and click the first one
+    const deleteButtons = screen.getAllByText('Delete');
+    fireEvent.click(deleteButtons[0]);
+
+    // Check if todo is removed
     expect(screen.queryByText('Learn React')).not.toBeInTheDocument();
+    });
 });
