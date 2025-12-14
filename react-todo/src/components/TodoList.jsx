@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
-function TodoList() {
-    // Initial demo todos
+const TodoList = () => {
+    // Static array of initial todos
     const [todos, setTodos] = useState([
         { id: 1, text: 'Learn React', completed: false },
         { id: 2, text: 'Build a Todo App', completed: false },
@@ -73,6 +73,6 @@ function TodoList() {
         </ul>
         </div>
     );
-}
+};
 
 export default TodoList;
