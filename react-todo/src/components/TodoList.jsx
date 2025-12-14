@@ -1,86 +1,71 @@
 import { useState } from 'react';
 
-const TodoList = () => {
-  // Initial state with demo todos
-    const initialTodos = [
+function TodoList() {
+    // Initial demo todos
+    const [todos, setTodos] = useState([
         { id: 1, text: 'Learn React', completed: false },
         { id: 2, text: 'Build a Todo App', completed: false },
         { id: 3, text: 'Write Tests', completed: false }
-    ];
-
-    const [todos, setTodos] = useState(initialTodos);
+    ]);
+    
     const [newTodo, setNewTodo] = useState('');
 
-    // Add a new todo
-    const handleAddTodo = (e) => {
+    // Add new todo
+    const handleSubmit = (e) => {
         e.preventDefault();
-        const trimmedTodo = newTodo.trim();
+        if (newTodo.trim() === '') return;
         
-        if (trimmedTodo) {
         const todo = {
-            id: Date.now(), // Simple unique ID
-            text: trimmedTodo,
-            completed: false
+        id: todos.length + 1,
+        text: newTodo,
+        completed: false
         };
+        
         setTodos([...todos, todo]);
         setNewTodo('');
-        }
     };
 
-    // Toggle todo completion
-    const handleToggleTodo = (id) => {
+    // Toggle completion
+    const toggleTodo = (id) => {
         setTodos(todos.map(todo => 
         todo.id === id ? { ...todo, completed: !todo.completed } : todo
         ));
     };
 
-    // Delete a todo
-    const handleDeleteTodo = (id) => {
+    // Delete todo
+    const deleteTodo = (id) => {
         setTodos(todos.filter(todo => todo.id !== id));
     };
 
     return (
-        <div className="todo-app" data-testid="todo-app">
+        <div>
         <h1>Todo List</h1>
         
         {/* AddTodoForm */}
-        <form onSubmit={handleAddTodo} data-testid="add-todo-form">
+        <form onSubmit={handleSubmit}>
             <input
             type="text"
             value={newTodo}
             onChange={(e) => setNewTodo(e.target.value)}
-            placeholder="Add a new todo..."
-            data-testid="todo-input"
+            placeholder="What needs to be done?"
             />
-            <button 
-            type="submit" 
-            data-testid="add-button"
-            >
-            Add Todo
-            </button>
+            <button type="submit">Add Todo</button>
         </form>
         
         {/* Todo List */}
-        <ul data-testid="todo-list">
+        <ul>
             {todos.map(todo => (
-            <li 
-                key={todo.id} 
-                data-testid={`todo-item-${todo.id}`}
-            >
+            <li key={todo.id}>
                 <span
-                onClick={() => handleToggleTodo(todo.id)}
-                style={{ 
+                onClick={() => toggleTodo(todo.id)}
+                style={{
                     textDecoration: todo.completed ? 'line-through' : 'none',
                     cursor: 'pointer'
                 }}
-                data-testid={`todo-text-${todo.id}`}
                 >
                 {todo.text}
                 </span>
-                <button
-                onClick={() => handleDeleteTodo(todo.id)}
-                data-testid={`delete-button-${todo.id}`}
-                >
+                <button onClick={() => deleteTodo(todo.id)}>
                 Delete
                 </button>
             </li>
@@ -88,6 +73,6 @@ const TodoList = () => {
         </ul>
         </div>
     );
-};
+}
 
 export default TodoList;
